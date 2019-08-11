@@ -26,7 +26,9 @@ public class LambdaJavaAPI implements RequestHandler<Object, GatewayResponse> {
 	private void save(String s) {
 		DynamoDB dynamoDB = new DynamoDB(AmazonDynamoDBClientBuilder.defaultClient());
 		Item item = new Item().withPrimaryKey("id", String.valueOf(Math.random()%10*100)).withString("title",s);
-		dynamoDB.getTable("items").putItem(item);
+		String tableName = System.getenv("tableName");
+		System.out.println("Hey, I have got table " + tableName);
+		dynamoDB.getTable(tableName).putItem(item);
 
 	}
 	public static void main(String[] args) {
